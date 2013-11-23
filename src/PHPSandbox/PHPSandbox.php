@@ -5617,7 +5617,16 @@
                 }
                 array_unshift($arguments, $this);
                 $this->execution_time = microtime(true);
-                $result = call_user_func_array($this->generated_closure, $arguments);
+	            if($this->allow_escaping && stristr($this->generated_code, '?>')) {
+		            /**
+		             * Useful if an HTML template inner-twined with PHP was sent.
+		             */
+		            ob_start();
+		            call_user_func_array($this->generated_closure, $arguments);
+		            $result = ob_get_clean();
+	            } else {
+		            $result = call_user_func_array($this->generated_closure, $arguments);
+	            }
                 usleep(1); //guarantee at least some time passes
                 $this->execution_time = (microtime(true) - $this->execution_time);
                 return $result;
