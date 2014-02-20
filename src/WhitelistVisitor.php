@@ -4,6 +4,25 @@
      */
     namespace PHPSandbox;
 
+    use PHPParser\NodeVisitorAbstract,
+        PHPParser\Node,
+        PHPParser\Node\Name,
+        PHPParser\Node\Arg,
+        PHPParser\Node\Scalar\String,
+        PHPParser\Node\Stmt\Namespace_,
+        PHPParser\Node\Stmt\Class_,
+        PHPParser\Node\Stmt\Interface_,
+        PHPParser\Node\Stmt\Trait_,
+        PHPParser\Node\Stmt\Use_,
+        PHPParser\Node\Stmt\UseUse,
+        PHPParser\Node\Stmt\Global_,
+        PHPParser\Node\Stmt\Function_,
+        PHPParser\Node\Stmt\StaticVar,
+        PHPParser\Node\Expr\ConstFetch,
+        PHPParser\Node\Expr\FuncCall,
+        PHPParser\Node\Expr\Variable,
+        PHPParser\Node\Expr\New_;
+    
     /**
      * Whitelister class for PHP Sandboxes.
      *
@@ -13,9 +32,9 @@
      * @namespace PHPSandbox
      *
      * @author  Elijah Horton <fieryprophet@yahoo.com>
-     * @version 1.3
+     * @version 1.4
      */
-    class WhitelistVisitor extends \PHPParser_NodeVisitorAbstract {
+    class WhitelistVisitor extends NodeVisitorAbstract {
         /** The PHPSandbox instance to check against
          * @var PHPSandbox
          */
@@ -31,43 +50,43 @@
         }
         /** Examine the current PHPParser_Node node against the PHPSandbox configuration for whitelisting trusted code
          *
-         * @param   \PHPParser_Node   $node          The trusted $node to examine
+         * @param   Node   $node          The trusted $node to examine
          *
          * @return  null|bool         Return false if node must be removed, or null if no changes to the node are made
          */
-        public function leaveNode(\PHPParser_Node $node){
-            if($node instanceof \PHPParser_Node_Expr_FuncCall && $node->name instanceof \PHPParser_Node_Name && !$this->sandbox->has_blacklist_funcs()){
+        public function leaveNode(Node $node){
+            if($node instanceof FuncCall && $node->name instanceof Name && !$this->sandbox->has_blacklist_funcs()){
                 $this->sandbox->whitelist_func($node->name->toString());
-            } else if($node instanceof \PHPParser_Node_Stmt_Function && is_string($node->name) && $node->name && !$this->sandbox->has_blacklist_funcs()){
+            } else if($node instanceof Function_ && is_string($node->name) && $node->name && !$this->sandbox->has_blacklist_funcs()){
                 $this->sandbox->whitelist_func($node->name);
-            } else if(($node instanceof \PHPParser_Node_Expr_Variable || $node instanceof \PHPParser_Node_Stmt_StaticVar) && is_string($node->name) && $this->sandbox->has_whitelist_vars() && !$this->sandbox->allow_variables){
+            } else if(($node instanceof Variable || $node instanceof StaticVar) && is_string($node->name) && $this->sandbox->has_whitelist_vars() && !$this->sandbox->allow_variables){
                 $this->sandbox->whitelist_var($node->name);
-            } else if($node instanceof \PHPParser_Node_Expr_FuncCall && $node->name instanceof \PHPParser_Node_Name && $node->name->toString() == 'define' && !$this->sandbox->is_defined_func('define') && !$this->sandbox->has_blacklist_consts()){
+            } else if($node instanceof FuncCall && $node->name instanceof Name && $node->name->toString() == 'define' && !$this->sandbox->is_defined_func('define') && !$this->sandbox->has_blacklist_consts()){
                 $name = isset($node->args[0]) ? $node->args[0] : null;
-                if($name && $name instanceof \PHPParser_Node_Arg && $name->value instanceof \PHPParser_Node_Scalar_String && is_string($name->value->value) && $name->value->value){
+                if($name && $name instanceof Arg && $name->value instanceof String && is_string($name->value->value) && $name->value->value){
                     $this->sandbox->whitelist_const($name->value->value);
                 }
-            } else if($node instanceof \PHPParser_Node_Expr_ConstFetch && $node->name instanceof \PHPParser_Node_Name && !$this->sandbox->has_blacklist_consts()){
+            } else if($node instanceof ConstFetch && $node->name instanceof Name && !$this->sandbox->has_blacklist_consts()){
                 $this->sandbox->whitelist_const($node->name->toString());
-            } else if($node instanceof \PHPParser_Node_Stmt_Class && is_string($node->name) && !$this->sandbox->has_blacklist_classes()){
+            } else if($node instanceof Class_ && is_string($node->name) && !$this->sandbox->has_blacklist_classes()){
                 $this->sandbox->whitelist_class($node->name);
-            } else if($node instanceof \PHPParser_Node_Stmt_Interface && is_string($node->name) && !$this->sandbox->has_blacklist_interfaces()){
+            } else if($node instanceof Interface_ && is_string($node->name) && !$this->sandbox->has_blacklist_interfaces()){
                 $this->sandbox->whitelist_interface($node->name);
-            } else if($node instanceof \PHPParser_Node_Stmt_Trait && is_string($node->name) && !$this->sandbox->has_blacklist_traits()){
+            } else if($node instanceof Trait_ && is_string($node->name) && !$this->sandbox->has_blacklist_traits()){
                 $this->sandbox->whitelist_trait($node->name);
-            } else if($node instanceof \PHPParser_Node_Expr_New && $node->class instanceof \PHPParser_Node_Name && !$this->sandbox->has_blacklist_types()){
+            } else if($node instanceof New_ && $node->class instanceof Name && !$this->sandbox->has_blacklist_types()){
                 $this->sandbox->whitelist_type($node->class->toString());
-            } else if($node instanceof \PHPParser_Node_Stmt_Global && $this->sandbox->has_whitelist_vars()){
+            } else if($node instanceof Global_ && $this->sandbox->has_whitelist_vars()){
                 foreach($node->vars as $var){
                     /**
-                     * @var \PHPParser_Node_Expr_Variable    $var
+                     * @var Variable    $var
                      */
-                    if($var instanceof \PHPParser_Node_Expr_Variable){
+                    if($var instanceof Variable){
                         $this->sandbox->whitelist_var($var->name);
                     }
                 }
-            } else if($node instanceof \PHPParser_Node_Stmt_Namespace){
-                if($node->name instanceof \PHPParser_Node_Name){
+            } else if($node instanceof Namespace_){
+                if($node->name instanceof Name){
                     $name = $node->name->toString();
                     $this->sandbox->check_namespace($name);
                     if(!$this->sandbox->is_defined_namespace($name)){
@@ -75,12 +94,12 @@
                     }
                 }
                 return false;
-            } else if($node instanceof \PHPParser_Node_Stmt_Use){
+            } else if($node instanceof Use_){
                 foreach($node->uses as $use){
                     /**
-                     * @var \PHPParser_Node_Stmt_UseUse    $use
+                     * @var UseUse    $use
                      */
-                    if($use instanceof \PHPParser_Node_Stmt_UseUse && $use->name instanceof \PHPParser_Node_Name && (is_string($use->alias) || is_null($use->alias))){
+                    if($use instanceof UseUse && $use->name instanceof Name && (is_string($use->alias) || is_null($use->alias))){
                         $name = $use->name->toString();
                         $this->sandbox->check_alias($name);
                         if(!$this->sandbox->is_defined_alias($name)){

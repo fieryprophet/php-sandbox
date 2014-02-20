@@ -1,4 +1,6 @@
 <?php
+    namespace PHPSandbox;
+    
     require_once('../vendor/autoload.php');
 
     if(isset($_REQUEST['load'])){
@@ -74,7 +76,7 @@
             'definitions' => $definitions
         );
         if(count($options)){
-            $sandbox = new \PHPSandbox\PHPSandbox;
+            $sandbox = new PHPSandbox;
             foreach($options as $name => $value){
                 if(($name == 'error_level' && $value != error_reporting()) || ($name != 'error_level' && $sandbox->get_option($name) != $value)){ //save unique options only
                     $data['options'][$name] = $value;
@@ -110,7 +112,7 @@
         $whitelist = isset($_POST['whitelist']) ? $_POST['whitelist'] : null;
         $blacklist = isset($_POST['blacklist']) ? $_POST['blacklist'] : null;
         $definitions = isset($_POST['definitions']) ? $_POST['definitions'] : null;
-        $sandbox = \PHPSandbox\PHPSandbox::create()->import(array(
+        $sandbox = PHPSandbox::create()->import(array(
             'setup_code' => $setup_code,
             'prepend_code' => $prepend_code,
             'append_code' => $append_code,
@@ -119,7 +121,7 @@
             'blacklist' => $blacklist,
             'definitions' => $definitions
         ));
-        $sandbox->set_error_handler(function(\PHPSandbox\Error $e){ echo '<h2 style="color: red;">' . $e->getMessage() . '</h2>'; });
+        $sandbox->set_error_handler(function(Error $e){ echo '<h2 style="color: red;">' . $e->getMessage() . '</h2>'; exit; });
         try {
             ob_start();
             if($setup_code){
@@ -136,7 +138,7 @@
             $buffer = ob_get_contents();
             ob_end_clean();
             die('<pre>' . $buffer . '</pre>');
-        } catch(\PHPSandbox\Error $e){
+        } catch(Error $e){
             echo '<h2 style="color: red;">' . $e->getMessage() . '</h2>';
         }
     }
@@ -340,7 +342,7 @@
             <h3>Options</h3>
             <div id="options">
                 <?php
-                $sandbox = new \PHPSandbox\PHPSandbox;
+                $sandbox = new PHPSandbox;
                 foreach($sandbox as $name => $flag){
                     if(is_bool($flag)){
                         $lastname = strstr($name, '_', true);
@@ -558,6 +560,7 @@
     <br/>
     <br/>
     <input type="button" value="Run Code In Sandbox" id="run" style="width: 100%;"/>
+    <br/>
 </div>
 <div id="output_container">
     <h2>Output</h2>
@@ -612,7 +615,7 @@
     <br/>
     <select id="superglobal_editor_name">
         <?php
-        foreach(\PHPSandbox\PHPSandbox::$superglobals as $superglobal){
+        foreach(PHPSandbox::$superglobals as $superglobal){
             ?><option value="<?=ltrim($superglobal, '_');?>">$<?=$superglobal?></option><?php
         }
         ?>
@@ -668,7 +671,7 @@
     <br/>
     <select id="magic_const_editor_name">
         <?php
-            foreach(\PHPSandbox\PHPSandbox::$magic_constants as $magic_constant){
+            foreach(PHPSandbox::$magic_constants as $magic_constant){
                 ?><option value="<?=$magic_constant?>"><?=$magic_constant?></option><?php
             }
         ?>

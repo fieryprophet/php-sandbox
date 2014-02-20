@@ -3,7 +3,14 @@
      * @package PHPSandbox
      */
     namespace PHPSandbox;
-    use FunctionParser\FunctionParser;
+
+    use FunctionParser\FunctionParser,
+        PHPParser\Parser,
+        PHPParser\Error as ParserError,
+        PHPParser\Node,
+        PHPParser\NodeTraverser,
+        PHPParser\Lexer\Emulative,
+        PHPParser\PrettyPrinter\Standard;
 
     /**
      * PHPSandbox class for PHP Sandboxes.
@@ -14,7 +21,7 @@
      * @namespace PHPSandbox
      *
      * @author  Elijah Horton <fieryprophet@yahoo.com>
-     * @version 1.3
+     * @version 1.4
      */
     class PHPSandbox {
         /**
@@ -6211,13 +6218,13 @@
          * @throws  Error     Throw exception if code cannot be parsed for whitelisting
          */
         protected function auto_whitelist($code, $appended = false){
-            $parser = new \PHPParser_Parser(new \PHPParser_Lexer);
+            $parser = new Parser(new Emulative);
             try {
                 $statements = $parser->parse($code);
-            } catch (\PHPParser_Error $error) {
+            } catch (ParserError $error) {
                 return $this->error('Error parsing ' . ($appended ? 'appended' : 'prepended') . ' sandboxed code for auto-whitelisting!', Error::PARSER_ERROR, null, $code, $error);
             }
-            $traverser = new \PHPParser_NodeTraverser;
+            $traverser = new NodeTraverser;
             $whitelister = new WhitelistVisitor($this);
             $traverser->addVisitor($whitelister);
             $traverser->traverse($statements);
@@ -6372,15 +6379,15 @@
                 $this->whitelist_func('define');    //makes no sense to allow constants if you can't define them!
             }
             $this->preparsed_code = $this->disassemble($code);
-            $parser = new \PHPParser_Parser(new \PHPParser_Lexer_Emulative);
+            $parser = new Parser(new Emulative);
 
             try {
                 $this->parsed_ast = $parser->parse($this->preparsed_code);
-            } catch (\PHPParser_Error $error) {
+            } catch (ParserError $error) {
                 $this->error("Could not parse sandboxed code!", Error::PARSER_ERROR, null, $this->preparsed_code, $error);
             }
 
-            $prettyPrinter = new \PHPParser_PrettyPrinter_Default;
+            $prettyPrinter = new Standard;
 
             if(($this->allow_functions && $this->auto_whitelist_functions) ||
                 ($this->allow_constants && $this->auto_whitelist_constants) ||
@@ -6389,13 +6396,13 @@
                 ($this->allow_traits && $this->auto_whitelist_traits) ||
                 ($this->allow_globals && $this->auto_whitelist_globals)){
 
-                $traverser = new \PHPParser_NodeTraverser;
+                $traverser = new NodeTraverser;
                 $whitelister = new SandboxWhitelistVisitor($this);
                 $traverser->addVisitor($whitelister);
                 $traverser->traverse($this->parsed_ast);
             }
 
-            $traverser = new \PHPParser_NodeTraverser;
+            $traverser = new NodeTraverser;
 
             $validator = new ValidatorVisitor($this);
 
@@ -6507,14 +6514,14 @@
          *
          * @param   \Exception|Error|string     $error      Error to throw if Error is not handled, or error message string
          * @param   int                         $code       The error code
-         * @param   \PHPParser_Node|null        $node       The error parser node
+         * @param   Node|null                   $node       The error parser node
          * @param   mixed                       $data       The error data
          * @param   \Exception|Error|null       $previous   The previous Error thrown
          *
          * @throws  \Exception|Error
          * @return  mixed
          */
-        public function error($error, $code = 0, \PHPParser_Node $node = null, $data = null, \Exception $previous = null){
+        public function error($error, $code = 0, Node $node = null, $data = null, \Exception $previous = null){
             $error = ($error instanceof \Exception)
                 ? (($error instanceof Error)
                     ? new Error($error->getMessage(), $error->getCode(), $error->getNode(), $error->getData(), $error->getPrevious() ?: $this->last_error)
@@ -6527,8 +6534,7 @@
                     throw $result;
                 }
                 return $result;
-            } else {
-                throw $error;
             }
+            throw $error;
         }
     }
