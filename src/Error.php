@@ -4,7 +4,7 @@
      */
     namespace PHPSandbox;
     
-    use PHPParser\Node;
+    use PhpParser\Node;
     /**
      * Error class for PHP Sandboxes.
      *

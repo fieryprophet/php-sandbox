@@ -28,8 +28,7 @@
     },
     "autoload": {
         "psr-4": {
-            "PHPSandbox\\": "src/",
-            "PHPParser\\": "vendor/nikic/php-parser/lib/PhpParser/"
+            "PHPSandbox\\": "src/"
         }
     }
 }

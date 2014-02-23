@@ -4,18 +4,18 @@
  */
 namespace PHPSandbox;
 
-use PHPParser\NodeVisitorAbstract,
-    PHPParser\Node,
-    PHPParser\Node\Name,
-    PHPParser\Node\Arg,
-    PHPParser\Node\Scalar\String,
-    PHPParser\Node\Stmt\Class_,
-    PHPParser\Node\Stmt\Interface_,
-    PHPParser\Node\Stmt\Trait_,
-    PHPParser\Node\Stmt\Global_,
-    PHPParser\Node\Stmt\Function_,
-    PHPParser\Node\Expr\FuncCall,
-    PHPParser\Node\Expr\Variable;
+use PhpParser\NodeVisitorAbstract,
+    PhpParser\Node,
+    PhpParser\Node\Name,
+    PhpParser\Node\Arg,
+    PhpParser\Node\Scalar\String,
+    PhpParser\Node\Stmt\Class_,
+    PhpParser\Node\Stmt\Interface_,
+    PhpParser\Node\Stmt\Trait_,
+    PhpParser\Node\Stmt\Global_,
+    PhpParser\Node\Stmt\Function_,
+    PhpParser\Node\Expr\FuncCall,
+    PhpParser\Node\Expr\Variable;
 
 /**
  * SandboxWhitelister class for PHP Sandboxes.
@@ -42,7 +42,7 @@ class SandboxWhitelistVisitor extends NodeVisitorAbstract {
     public function __construct(PHPSandbox $sandbox){
         $this->sandbox = $sandbox;
     }
-    /** Examine the current PHPParser_Node node against the PHPSandbox configuration for whitelisting sandboxed code
+    /** Examine the current PhpParser_Node node against the PHPSandbox configuration for whitelisting sandboxed code
      *
      * @param   Node         $node               The sandboxed $node to examine
      */

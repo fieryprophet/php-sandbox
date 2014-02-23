@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "36dcfad0ab49b586feb91288960cc79e",
+    "hash": "a97529d7b20bf76b9fe634bb3ff0934c",
     "packages": [
         {
             "name": "jeremeamia/FunctionParser",
@@ -53,12 +53,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "1c8481bff64299b6fb2a246b7f778b184394fe73"
+                "reference": "74efea91d1476cb7cb7f2899ed949ecf9570a9f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/1c8481bff64299b6fb2a246b7f778b184394fe73",
-                "reference": "1c8481bff64299b6fb2a246b7f778b184394fe73",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/74efea91d1476cb7cb7f2899ed949ecf9570a9f4",
+                "reference": "74efea91d1476cb7cb7f2899ed949ecf9570a9f4",
                 "shasum": ""
             },
             "require": {
@@ -90,7 +90,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2014-02-12 19:23:12"
+            "time": "2014-02-21 17:19:28"
         }
     ],
     "packages-dev": [
@@ -250,7 +250,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan H. Wage",
+                    "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -269,7 +269,7 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -327,7 +327,7 @@
                     "email": "roman@code-factory.org"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -2484,7 +2484,7 @@
                     "role": "Lead Developer"
                 },
                 {
-                    "name": "Armin Ronacher2",
+                    "name": "Armin Ronacher",
                     "email": "armin.ronacher@active-4.com",
                     "role": "Project Founder"
                 },

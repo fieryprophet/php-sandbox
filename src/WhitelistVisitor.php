@@ -4,24 +4,24 @@
      */
     namespace PHPSandbox;
 
-    use PHPParser\NodeVisitorAbstract,
-        PHPParser\Node,
-        PHPParser\Node\Name,
-        PHPParser\Node\Arg,
-        PHPParser\Node\Scalar\String,
-        PHPParser\Node\Stmt\Namespace_,
-        PHPParser\Node\Stmt\Class_,
-        PHPParser\Node\Stmt\Interface_,
-        PHPParser\Node\Stmt\Trait_,
-        PHPParser\Node\Stmt\Use_,
-        PHPParser\Node\Stmt\UseUse,
-        PHPParser\Node\Stmt\Global_,
-        PHPParser\Node\Stmt\Function_,
-        PHPParser\Node\Stmt\StaticVar,
-        PHPParser\Node\Expr\ConstFetch,
-        PHPParser\Node\Expr\FuncCall,
-        PHPParser\Node\Expr\Variable,
-        PHPParser\Node\Expr\New_;
+    use PhpParser\NodeVisitorAbstract,
+        PhpParser\Node,
+        PhpParser\Node\Name,
+        PhpParser\Node\Arg,
+        PhpParser\Node\Scalar\String,
+        PhpParser\Node\Stmt\Namespace_,
+        PhpParser\Node\Stmt\Class_,
+        PhpParser\Node\Stmt\Interface_,
+        PhpParser\Node\Stmt\Trait_,
+        PhpParser\Node\Stmt\Use_,
+        PhpParser\Node\Stmt\UseUse,
+        PhpParser\Node\Stmt\Global_,
+        PhpParser\Node\Stmt\Function_,
+        PhpParser\Node\Stmt\StaticVar,
+        PhpParser\Node\Expr\ConstFetch,
+        PhpParser\Node\Expr\FuncCall,
+        PhpParser\Node\Expr\Variable,
+        PhpParser\Node\Expr\New_;
     
     /**
      * Whitelister class for PHP Sandboxes.
@@ -48,7 +48,7 @@
         public function __construct(PHPSandbox $sandbox){
             $this->sandbox = $sandbox;
         }
-        /** Examine the current PHPParser_Node node against the PHPSandbox configuration for whitelisting trusted code
+        /** Examine the current PhpParser_Node node against the PHPSandbox configuration for whitelisting trusted code
          *
          * @param   Node   $node          The trusted $node to examine
          *

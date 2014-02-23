@@ -5,12 +5,12 @@
     namespace PHPSandbox;
 
     use FunctionParser\FunctionParser,
-        PHPParser\Parser,
-        PHPParser\Error as ParserError,
-        PHPParser\Node,
-        PHPParser\NodeTraverser,
-        PHPParser\Lexer\Emulative,
-        PHPParser\PrettyPrinter\Standard;
+        PhpParser\Parser,
+        PhpParser\Error as ParserError,
+        PhpParser\Node,
+        PhpParser\NodeTraverser,
+        PhpParser\Lexer\Emulative,
+        PhpParser\PrettyPrinter\Standard;
 
     /**
      * PHPSandbox class for PHP Sandboxes.
@@ -5588,7 +5588,7 @@
          *
          * @example $sandbox->whitelist_type('PHPSandbox');
          *
-         * @example $sandbox->whitelist_type(array('PHPSandbox', 'PHPParser'));
+         * @example $sandbox->whitelist_type(array('PHPSandbox', 'PhpParser'));
          *
          * @param   string|array        $name       String of type name or array of type names to whitelist
          *
@@ -5604,7 +5604,7 @@
          *
          * @example $sandbox->blacklist_type('PHPSandbox');
          *
-         * @example $sandbox->blacklist_type(array('PHPSandbox', 'PHPParser'));
+         * @example $sandbox->blacklist_type(array('PHPSandbox', 'PhpParser'));
          *
          * @param   string|array        $name       String of type name or array of type names to blacklist
          *
@@ -5620,7 +5620,7 @@
          *
          * @example $sandbox->dewhitelist_type('PHPSandbox');
          *
-         * @example $sandbox->dewhitelist_type(array('PHPSandbox', 'PHPParser'));
+         * @example $sandbox->dewhitelist_type(array('PHPSandbox', 'PhpParser'));
          *
          * @param   string|array        $name       String of type name or array of type names to remove from whitelist
          *
@@ -5636,7 +5636,7 @@
          *
          * @example $sandbox->deblacklist_type('PHPSandbox');
          *
-         * @example $sandbox->deblacklist_type(array('PHPSandbox', 'PHPParser'));
+         * @example $sandbox->deblacklist_type(array('PHPSandbox', 'PhpParser'));
          *
          * @param   string|array        $name       String of type name or array of type names to remove from blacklist
          *

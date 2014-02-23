@@ -4,41 +4,41 @@
      */
     namespace PHPSandbox;
 
-    use PHPParser\NodeVisitorAbstract,
-        PHPParser\Node,
-        PHPParser\Node\Name,
-        PHPParser\Node\Arg,
-        PHPParser\Node\Scalar\String,
-        PHPParser\Node\Scalar\LNumber,
-        PHPParser\Node\Stmt\Namespace_,
-        PHPParser\Node\Stmt\Class_,
-        PHPParser\Node\Stmt\Interface_,
-        PHPParser\Node\Stmt\Trait_,
-        PHPParser\Node\Stmt\TraitUse,
-        PHPParser\Node\Stmt\Use_,
-        PHPParser\Node\Stmt\UseUse,
-        PHPParser\Node\Stmt\Global_,
-        PHPParser\Node\Stmt\Const_,
-        PHPParser\Node\Stmt\Function_,
-        PHPParser\Node\Stmt\StaticVar,
-        PHPParser\Node\Stmt\HaltCompiler,
-        PHPParser\Node\Stmt\InlineHTML,
-        PHPParser\Node\Expr\ConstFetch,
-        PHPParser\Node\Expr\Cast,
-        PHPParser\Node\Expr\FuncCall,
-        PHPParser\Node\Expr\Ternary,
-        PHPParser\Node\Expr\MethodCall,
-        PHPParser\Node\Expr\Closure,
-        PHPParser\Node\Expr\ClosureUse,
-        PHPParser\Node\Expr\ErrorSuppress,
-        PHPParser\Node\Expr\AssignRef,
-        PHPParser\Node\Expr\Variable,
-        PHPParser\Node\Expr\New_,
-        PHPParser\Node\Expr\Yield_,
-        PHPParser\Node\Expr\ClassConstFetch,
-        PHPParser\Node\Expr\StaticCall,
-        PHPParser\Node\Expr\StaticPropertyFetch,
-        PHPParser\Node\Expr\ShellExec;
+    use PhpParser\NodeVisitorAbstract,
+        PhpParser\Node,
+        PhpParser\Node\Name,
+        PhpParser\Node\Arg,
+        PhpParser\Node\Scalar\String,
+        PhpParser\Node\Scalar\LNumber,
+        PhpParser\Node\Stmt\Namespace_,
+        PhpParser\Node\Stmt\Class_,
+        PhpParser\Node\Stmt\Interface_,
+        PhpParser\Node\Stmt\Trait_,
+        PhpParser\Node\Stmt\TraitUse,
+        PhpParser\Node\Stmt\Use_,
+        PhpParser\Node\Stmt\UseUse,
+        PhpParser\Node\Stmt\Global_,
+        PhpParser\Node\Stmt\Const_,
+        PhpParser\Node\Stmt\Function_,
+        PhpParser\Node\Stmt\StaticVar,
+        PhpParser\Node\Stmt\HaltCompiler,
+        PhpParser\Node\Stmt\InlineHTML,
+        PhpParser\Node\Expr\ConstFetch,
+        PhpParser\Node\Expr\Cast,
+        PhpParser\Node\Expr\FuncCall,
+        PhpParser\Node\Expr\Ternary,
+        PhpParser\Node\Expr\MethodCall,
+        PhpParser\Node\Expr\Closure,
+        PhpParser\Node\Expr\ClosureUse,
+        PhpParser\Node\Expr\ErrorSuppress,
+        PhpParser\Node\Expr\AssignRef,
+        PhpParser\Node\Expr\Variable,
+        PhpParser\Node\Expr\New_,
+        PhpParser\Node\Expr\Yield_,
+        PhpParser\Node\Expr\ClassConstFetch,
+        PhpParser\Node\Expr\StaticCall,
+        PhpParser\Node\Expr\StaticPropertyFetch,
+        PhpParser\Node\Expr\ShellExec;
 
     /**
      * Validator class for PHP Sandboxes.
@@ -65,13 +65,13 @@
         public function __construct(PHPSandbox $sandbox){
             $this->sandbox = $sandbox;
         }
-        /** Examine the current PHPParser\Node node against the PHPSandbox configuration for validating sandboxed code
+        /** Examine the current PhpParser\Node node against the PHPSandbox configuration for validating sandboxed code
          *
          * @param   Node              $node          The sandboxed $node to validate
          *
          * @throws  Error             Throws an exception if validation fails
          *
-         * @return  \PHPParser\Node|bool|null        Return rewritten node, false if node must be removed, or null if no changes to the node are made
+         * @return  \PhpParser\Node|bool|null        Return rewritten node, false if node must be removed, or null if no changes to the node are made
          */
         public function leaveNode(Node $node){
             if($node instanceof InlineHTML){
@@ -408,7 +408,7 @@
             }
             return null;
         }
-        /** Test the current PHPParser\Node node to see if it is a magic constant, and return the name if it is and null if it is not
+        /** Test the current PhpParser\Node node to see if it is a magic constant, and return the name if it is and null if it is not
          *
          * @param   Node   $node          The sandboxed $node to test
          *
@@ -435,7 +435,7 @@
             }
             return null;
         }
-        /** Test the current PHPParser\Node node to see if it is a keyword, and return the name if it is and null if it is not
+        /** Test the current PhpParser\Node node to see if it is a keyword, and return the name if it is and null if it is not
          *
          * @param   Node   $node      The sandboxed $node to test
          *
@@ -500,7 +500,7 @@
             }
             return null;
         }
-        /** Test the current PHPParser\Node node to see if it is an operator, and return the name if it is and null if it is not
+        /** Test the current PhpParser\Node node to see if it is an operator, and return the name if it is and null if it is not
          *
          * @param   Node   $node      The sandboxed $node to test
          *
@@ -603,7 +603,7 @@
             }
             return null;
         }
-        /** Test the current PHPParser\Node node to see if it is a primitive, and return the name if it is and null if it is not
+        /** Test the current PhpParser\Node node to see if it is a primitive, and return the name if it is and null if it is not
          *
          * @param   Node   $node      The sandboxed $node to test
          *
