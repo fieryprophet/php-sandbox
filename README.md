@@ -1,4 +1,13 @@
-![PHPSandbox](http://www.phpsandbox.org/wp-content/uploads/2015/07/logo.png)
+![PHPSandbox](http://phpsandbox.org/images/logo.png)
+
+##DEPRECATED: The PHPSandbox project has transfered to [Corveda/PHPSandbox](https://github.com/Corveda/PHPSandbox) and will be actively maintained there. This branch is no longer being actively maintained. Update your dependencies as follows:
+
+    {
+        "require": {
+            "corveda/php-sandbox": "2.*"
+        }
+    }
+
 
 ##A full-scale PHP 5.3.2+ sandbox class that utilizes [PHP-Parser](https://github.com/nikic/PHP-Parser) to prevent sandboxed code from running unsafe code.
 
